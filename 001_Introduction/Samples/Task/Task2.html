@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="todoListApp">
+<head>
+    <title>ToDo List (Task2)</title>
+    <script src="../Libraries/angular.js"></script>
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
+    <script src="todo.js"></script>
+    <script>
+
+        // Добавьте AngularJS контроллер
+         todoModel.data=todoModel.read();       
+        //todoModel.addItem("Rick","rdate", "rdesc", true);
+       
+        var todoListApp=angular.module("todoListApp", []);
+
+        todoListApp.controller("ToDoListCtrl", function($scope)
+        {
+            //todoModel.read();
+            $scope.data=todoModel;            
+
+            $scope.addNewItem=function(){
+                $scope.data.addItem($scope.name, $scope.description, $scope.duedate, $scope.completed);
+                $scope.data.save();
+                //$scope.data.read();
+                //очищаем наши поля
+                $scope.name="";
+                $scope.description="";
+                $scope.duedate="";
+                $scope.completed="";
+            };
+
+            $scope.update = function(todo) {
+            $scope.id=todo.id;
+            $scope.name=todo.name;
+            $scope.description=todo.description;
+            $scope.duedate=todo.duedate;
+            $scope.completed=todo.completed;
+            };
+
+        });
+    </script>
+
+</head>
+<body ng-controller="ToDoListCtrl">
+    <div class="container">
+        <h3>ToDo List </h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+           <tbody>
+                <tr ng-repeat="todo in data.data" ng-click="update(todo)">
+                        <td>{{todo.name}}</td>
+                        <td>{{todo.description}}</td>
+                        <td>{{todo.duedate}}</td>
+                        <td>{{todo.completed}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <!-- Форма для добавления новых задач -->
+            <form class="form-horizontal">
+            <div class="form-group row">
+                <label for="input1" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="input1" placeholder="Name" ng-model="name">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="input2" class="col-sm-2 control-label">Due Date</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="input2" placeholder="Due Date" ng-model="duedate">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="input3" class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="input3" placeholder="Description" ng-model="description">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="completed"> Completed
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" ng-click="addNewItem()">Add ToDo</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</body>
+</html>
