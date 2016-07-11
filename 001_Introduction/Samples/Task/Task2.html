@@ -17,7 +17,9 @@
         todoListApp.controller("ToDoListCtrl", function($scope)
         {
             //todoModel.read();
-            $scope.data=todoModel;            
+            $scope.data=todoModel;
+            $scope.updateBtn=true;
+            $scope.deleteBtn=true;            
 
             $scope.addNewItem=function(){
                 $scope.data.addItem($scope.name, $scope.description, $scope.duedate, $scope.completed);
@@ -30,12 +32,45 @@
                 $scope.completed="";
             };
 
-            $scope.update = function(todo) {
+            $scope.updateItem=function(){
+            	//var value=[{name:$scope.name, description: $scope.description, duedate: $scope.duedate, completed: $scope.completed }];
+            	//$scope.data.updateItem($scope.id,value);            	
+            	//$scope.data.save();
+
+            	$scope.id="";
+				$scope.name="";
+                $scope.description="";
+                $scope.duedate="";
+                $scope.completed="";
+
+            	$scope.updateBtn=true;
+            	$scope.deleteBtn=true;
+            };
+
+            $scope.deleteItem=function(){
+            	//проблема с удалением поля 
+            	$scope.data.removeItem($scope.id);
+            	$scope.data.save();
+
+            	$scope.id="";
+				$scope.name="";
+                $scope.description="";
+                $scope.duedate="";
+                $scope.completed="";
+
+            	$scope.updateBtn=true;
+            	$scope.deleteBtn=true;
+            };
+
+            $scope.select = function(todo) {
             $scope.id=todo.id;
             $scope.name=todo.name;
             $scope.description=todo.description;
             $scope.duedate=todo.duedate;
             $scope.completed=todo.completed;
+
+            $scope.updateBtn=false;
+            $scope.deleteBtn=false;
             };
 
         });
@@ -44,7 +79,7 @@
 </head>
 <body ng-controller="ToDoListCtrl">
     <div class="container">
-        <h3>ToDo List </h3>
+        <h3>ToDo List {{id}}</h3>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -55,7 +90,7 @@
                 </tr>
             </thead>
            <tbody>
-                <tr ng-repeat="todo in data.data" ng-click="update(todo)">
+                <tr ng-repeat="todo in data.data" ng-click="select(todo)">
                         <td>{{todo.name}}</td>
                         <td>{{todo.description}}</td>
                         <td>{{todo.duedate}}</td>
@@ -100,7 +135,9 @@
             <div class="form-group row">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default" ng-click="addNewItem()">Add ToDo</button>
-                </div>
+                    <button type="submit" class="btn btn-default" ng-click="updateItem()" ng-hide="updateBtn">Update ToDo</button>
+                    <button type="submit" class="btn btn-default" ng-click="deleteItem()" ng-hide="deleteBtn">Delete ToDo</button>
+                </div>                
             </div>
         </form>
         </div>
