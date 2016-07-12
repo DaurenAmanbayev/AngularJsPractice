@@ -1,150 +1,27 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="todoListApp">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="testApp">
 <head>
     <title>ToDo List (Task2)</title>
     <script src="../Libraries/angular.js"></script>
     <link href="../Libraries/bootstrap.css" rel="stylesheet" />
     <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" />
-    <script src="todo.js"></script>
-    <script>
-
-        // Добавьте AngularJS контроллер
-         todoModel.data=todoModel.read();       
-        //todoModel.addItem("Rick","rdate", "rdesc", true);
-       
-        var todoListApp=angular.module("todoListApp", []);
-
-        todoListApp.controller("ToDoListCtrl", function($scope)
-        {
-            //todoModel.read();
-            $scope.data=todoModel;
-            $scope.updateBtn=true;
-            $scope.deleteBtn=true;            
-
-            $scope.addNewItem=function(){
-                $scope.data.addItem($scope.name, $scope.description, $scope.duedate, $scope.completed);
-                $scope.data.save();
-                //$scope.data.read();
-                //очищаем наши поля
-                $scope.name="";
-                $scope.description="";
-                $scope.duedate="";
-                $scope.completed="";
-            };
-
-            $scope.updateItem=function(){
-            	var value={
-            		id: $scope.id, 
-            		name:$scope.name, 
-            		description: $scope.description, 
-            		duedate: $scope.duedate, 
-            		completed: $scope.completed };            		
-            	$scope.data.updateItem($scope.id,value);            	
-            	$scope.data.save();
-
-            	$scope.id="";
-				$scope.name="";
-                $scope.description="";
-                $scope.duedate="";
-                $scope.completed="";
-
-            	$scope.updateBtn=true;
-            	$scope.deleteBtn=true;
-            };
-
-            $scope.deleteItem=function(){
-            	//проблема с удалением поля 
-            	$scope.data.removeItem($scope.id);
-            	$scope.data.save();
-
-            	$scope.id="";
-				$scope.name="";
-                $scope.description="";
-                $scope.duedate="";
-                $scope.completed="";
-
-            	$scope.updateBtn=true;
-            	$scope.deleteBtn=true;
-            };
-
-            $scope.select = function(todo) {
-            $scope.id=todo.id;
-            $scope.name=todo.name;
-            $scope.description=todo.description;
-            $scope.duedate=todo.duedate;
-            $scope.completed=todo.completed;
-
-            $scope.updateBtn=false;
-            $scope.deleteBtn=false;
-            };
-
-        });
-    </script>
+    <script src="quizApp.js"></script>   
 
 </head>
-<body ng-controller="ToDoListCtrl">
+<body ng-controller="TestAppCtrl">
     <div class="container">
-        <h3>ToDo List: selected index {{id}}</h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    <th>Completed</th>
-                </tr>
-            </thead>
-           <tbody>
-                <tr ng-repeat="todo in data.data" ng-click="select(todo)">
-                        <td>{{todo.name}}</td>
-                        <td>{{todo.description}}</td>
-                        <td>{{todo.duedate}}</td>
-                        <td>{{todo.completed}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <h3>Quiz</h3>
+        Questions <select ng-model="mode" ng-options="item.question for item in quiz"></select>
 
-        <div>
-            <!-- Форма для добавления новых задач -->
-            <form class="form-horizontal">
-            <div class="form-group row">
-                <label for="input1" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="input1" placeholder="Name" ng-model="name">
-                </div>
-            </div>
+        <!-- ng-switch - директива используется для переключения структуры DOM на основе выражения. В отличии от ng-include данная
+             директива не прозводит загрузку с сервера данных, а делает видимым один из элементов, который есть в DOM -->
+       
+        <div ng-switch on="mode.value" style="margin-top:20px;">
 
-            <div class="form-group row">
-                <label for="input2" class="col-sm-2 control-label">Due Date</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="input2" placeholder="Due Date" ng-model="duedate">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="input3" class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="input3" placeholder="Description" ng-model="description">
-                </div>
-            </div>
+            <ul class="list-group" ng-switch-when="1">
+                <li ng-repeat="item in items" class="list-group-item list-group-item-info">{{item.name}}:{{item.value}}</li>
+            </ul>
 
-            <div class="form-group row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="completed"> Completed
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default" ng-click="addNewItem()">Add ToDo</button>
-                    <button type="submit" class="btn btn-default" ng-click="updateItem()" ng-hide="updateBtn">Update ToDo</button>
-                    <button type="submit" class="btn btn-default" ng-click="deleteItem()" ng-hide="deleteBtn">Delete ToDo</button>
-                </div>                
-            </div>
-        </form>
         </div>
     </div>
 </body>
