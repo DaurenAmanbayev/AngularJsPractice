@@ -13,20 +13,10 @@
  <div class="container">
  	<div class="page-header">
  	<h1>ITVDN news</h1>
+ 	<a class="btn btn-primary" ng-click="showDetails()">Details</a>	
+ 	<a class="btn btn-primary" ng-click="hideDetails()">Not Details</a>
  	</div>
- 	<table class="table-hover" width="300" height="200" cellpadding="0" cellspacing="0" 
- 	style=" table-layout:fixed; 
- 			float:left; 
- 			margin:0 9px 0 0;"> 	
- 	<tr ng-repeat="news in data">
- 		<td>	 	
-	 	 <h3>{{news.title}}</h3>
-	 	 <p>{{news.published}}</p>	 	 
-	 	 <a class="btn btn-primary" href={{news.link}}>Read article...</a>	 	
-	 	</td>	 	
- 	</tr> 	
- 	</table>
- 	<ng-include src="url"></ng-include>
+ 	<ng-include src="url"></ng-include> 	
  </div>
 </body>
 </html>
