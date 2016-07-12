@@ -12,8 +12,8 @@
     newsFeedApp.controller("NewsFeedCtrl", function ($scope) {
 
             $scope.data = model; 
-            $scope.detailsView = "Details.html"; 
-            $scope.simpleView = "NotDetails.html"; 
+            $scope.detailsView = 'Details.html';
+            $scope.simpleView = 'NotDetails.html'; 
             $scope.url =$scope.simpleView; 
            // $scope.url="Description.html"; 
            	$scope.showDetails = function () {
@@ -24,3 +24,4 @@
     }
      
     });
+
