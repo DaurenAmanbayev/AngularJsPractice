@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="newsFeedApp">
+<head>
+    <title>Task 1</title>
+    <script src="../Libraries/angular.js"></script>
+    <script src="model.js"></script>
+
+    <link href="../Libraries/bootstrap.css" rel="stylesheet" />
+    <link href="../Libraries/bootstrap-theme.css" rel="stylesheet" /> 
+
+</head>
+<body ng-controller="NewsFeedCtrl">
+ <div class="container">
+ 	<div class="page-header">
+ 	<h1>ITVDN news</h1>
+ 	</div>
+ 	<table class="table-hover" width="300" height="200" cellpadding="0" cellspacing="0" 
+ 	style=" table-layout:fixed; 
+ 			float:left; 
+ 			margin:0 9px 0 0;"> 	
+ 	<tr ng-repeat="news in data">
+ 		<td>	 	
+	 	 <h3>{{news.title}}</h3>
+	 	 <p>{{news.published}}</p>	 	 
+	 	 <a class="btn btn-primary" href={{news.link}}>Read article...</a>	 	
+	 	</td>	 	
+ 	</tr> 	
+ 	</table>
+ 	<ng-include src="url"></ng-include>
+ </div>
+</body>
+</html>
